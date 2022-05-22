@@ -37,7 +37,7 @@ public class OrderController {
   }
 
   @GetMapping("/{orderId}")
-  public Order getOrder(@RequestBody Long orderId) {
+  public Order getOrder(@PathVariable Long orderId) {
     return orderService.getOrder(orderId);
   }
 

@@ -13,8 +13,6 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import javax.servlet.http.HttpServletResponse;
 
@@ -55,14 +53,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     public void configure(WebSecurity web) throws Exception {
-        web.ignoring()
-                .antMatchers("/v3/api-docs")
-                .antMatchers("/swagger-resources/**")
-                .antMatchers("/swagger-ui/**")
-                .antMatchers("/configuration/**")
-                .antMatchers("/webjars/**")
-                .antMatchers("/h2-console/**")
-                .antMatchers("/public");
+    web.ignoring()
+        .antMatchers("/v3/api-docs")
+        .antMatchers("/swagger-resources/**")
+        .antMatchers("/swagger-ui/**")
+        .antMatchers("/configuration/**")
+        .antMatchers("/webjars/**")
+        .antMatchers("/h2-console/**");
     }
 
     @Bean

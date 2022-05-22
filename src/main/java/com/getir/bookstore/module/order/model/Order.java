@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.annotations.ApiModelProperty;
 
 import javax.persistence.*;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import java.util.Date;
 
@@ -14,17 +15,25 @@ public class Order {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
-  @NotNull(message = "Customer Id cannot be blank")
+  @NotNull(message = "Customer Id is required.")
   @ApiModelProperty(required = true)
   private Long customerId;
 
-  @NotNull(message = "Book Id cannot be blank")
+  @NotNull(message = "Book Id is required.")
   @ApiModelProperty(required = true)
   private Long bookId;
+
+  @Min(value = 1, message = "Minimum 1 quantity must be ordered.")
+  @ApiModelProperty(required = true)
+  private int quantity;
 
   @ApiModelProperty(required = true)
   @Enumerated(EnumType.STRING)
   private PaymentMode paymentMode;
+
+  @ApiModelProperty(required = true)
+  @NotNull(message = "Order amount is required.")
+  private Float orderAmount;
 
   @JsonFormat(pattern = "dd-MM-yyyy")
   @NotNull
@@ -55,12 +64,28 @@ public class Order {
     this.bookId = bookId;
   }
 
+  public int getQuantity() {
+    return quantity;
+  }
+
+  public void setQuantity(int quantity) {
+    this.quantity = quantity;
+  }
+
   public PaymentMode getPaymentMode() {
     return paymentMode;
   }
 
   public void setPaymentMode(PaymentMode paymentMode) {
     this.paymentMode = paymentMode;
+  }
+
+  public Float getOrderAmount() {
+    return orderAmount;
+  }
+
+  public void setOrderAmount(Float orderAmount) {
+    this.orderAmount = orderAmount;
   }
 
   public Date getOrderDate() {

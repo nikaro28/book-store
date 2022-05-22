@@ -26,10 +26,12 @@ CREATE UNIQUE INDEX UX_CUSTOMER_EMAIL ON tbl_Customer (Email);
 create table tbl_Order
 (
     Id           BIGINT AUTO_INCREMENT PRIMARY KEY,
-    Customer_Id  BIGINT   NOT NULL,
-    Book_Id      BIGINT   NOT NULL,
-    Payment_Mode char(15) NOT NULL,
-    Order_Date   date     NOT NULL,
+    Customer_Id  BIGINT         NOT NULL,
+    Book_Id      BIGINT         NOT NULL,
+    Quantity     INTEGER        NOT NULL,
+    Payment_Mode char(15)       NOT NULL,
+    Order_Amount NUMERIC(20, 2) NOT NULL,
+    Order_Date   date           NOT NULL,
     CONSTRAINT FK_SECURITY_CUSTOMER_ID FOREIGN KEY (Customer_Id) REFERENCES tbl_Customer (id),
     CONSTRAINT FK_SECURITY_BOOK_ID FOREIGN KEY (Book_Id) REFERENCES tbl_Book (id)
 );

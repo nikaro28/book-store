@@ -4,14 +4,16 @@ import com.getir.bookstore.common.model.Result;
 import com.getir.bookstore.module.book.model.Book;
 import com.getir.bookstore.module.book.repository.BookRepository;
 import com.getir.bookstore.module.book.validator.BookValidator;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
-import java.util.Collections;
-
 @Service
 public class BookService {
+
+  Logger log = LoggerFactory.getLogger(BookService.class);
 
   private final BookRepository bookRepo;
   private final BookValidator bookValidator;
@@ -48,6 +50,8 @@ public class BookService {
 
       bookRepo.save(b);
     });
+
+    log.info("Book with id {bookId} updated successfully!", bookId);
   }
 
   public Book getBook(Long bookId) {
