@@ -7,11 +7,14 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.HttpServerErrorException;
+
+import java.util.Collections;
 
 @Api("Authentication")
 @RestController
@@ -28,9 +31,13 @@ public class UserController {
   }
 
   @PostMapping("/login")
-  public String login(@RequestBody Login userLogin) {
-    return userService.signin(userLogin.getUsername(), userLogin.getPassword()).orElseThrow(()->
-        new HttpServerErrorException(HttpStatus.FORBIDDEN, "Login Failed"));
+  public ResponseEntity login(@RequestBody Login userLogin) {
+    String token =
+        userService
+            .signin(userLogin.getUsername(), userLogin.getPassword())
+            .orElseThrow(() -> new HttpServerErrorException(HttpStatus.FORBIDDEN, "Login Failed"));
+
+    return new ResponseEntity(Collections.singletonMap("bearer-token", token), HttpStatus.CREATED);
   }
 
 }
